@@ -1,10 +1,9 @@
 ## MySQL Replication 
 
-> DB : MySQL 5.7
+> DB : MySQL 5.7   
 > OS : ubuntu 18.04
    
-### Backup & Restore
----------------------------
+### 1. Backup & Restore
 + 데이터 무결성
 ```bash
 # dump backup
@@ -15,7 +14,6 @@ mysql -uroot -p < testdump.sql
 ```
 
 ### Master DB 
----------------------------
 + conf 변경
 ```bash
 # vim /etc/my.cnf
@@ -33,7 +31,6 @@ binlog_format=mixed
 ```
       
 ### Slave DB
----------------------------
 + conf 변경
 ```bash
 # vim /etc/my.cnf
@@ -58,7 +55,6 @@ binlog_format=mixed
 ```
    
 ### Replication Check
----------------------------
 ```mysql
 # slave 동작 확인
 > show slave status\G
