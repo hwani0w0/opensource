@@ -1,8 +1,10 @@
-### MySQL Replication 
+## MySQL Replication 
 
-+ version : 5.7
-+ OS : ubuntu 18.04
-
+| version : 5.7
+| OS : ubuntu 18.04
+   
+### Backup & Restore
++ 데이터 무결성
 ```bash
 # dump backup
 mysqldump -uroot -p -A -R -E --all-databases > testdump.sql
@@ -11,24 +13,34 @@ mysqldump -uroot -p -A -R -E --all-databases > testdump.sql
 mysql -uroot -p < testdump.sql
 ```
 
-
-
-+ 
-```
-show master status;
-
-# vi /etc/my.cnf
-server-id       = 1
+### Master DB 
++ conf 변경
+```bash
+# vim /etc/my.cnf
+server-id= 1
 log-bin=mysql-bin
 binlog_format=mixed
-
-mysql> GRANT REPLICATION SLAVE ON *.* TO 'repl'@'{Slave DB IP}' IDENTIFIED BY '{password}';
-mysql> FLUSH TABLES WITH READ LOCK;
-unlock tables;
+   
+# systemctl restart mysql
 ```
++ SQL 변경
+```mysql
+create user 'repli'@'{Slave DB IP}' identified by '{password};
+grant replication slave on *.* to 'repli'@'{Slave DB IP}' identified by '{password}';
+flush tables with read lock;
+```
+      
+### Slave DB
++ conf 변경
+```bash
+# vim /etc/my.cnf
+server-id= 2
+log-bin=mysql-bin
+binlog_format=mixed
    
-   
-+ slave 설정
+# systemctl restart mysql
+```
++ SQL 변경
 ```mysql
 stop slave;
    
@@ -43,13 +55,14 @@ master_connect_retry=10;
    
 start slave;
 ```
-
+   
+### Replication Check
 ```mysql
 # slave 동작 확인
 show slave status\G
 
 # master 동작 확인
-show processlist\G
+> unlock tables;
+> show processlist\G
 ```
-
-
+   
