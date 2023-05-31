@@ -22,7 +22,7 @@ server-id       = 1
 log-bin=mysql-bin
 binlog_format=mixed
 
-mysql> GRANT REPLICATION SLAVE ON *.* TO 'repl'@'192.168.0.2' IDENTIFIED BY '비번';
+mysql> GRANT REPLICATION SLAVE ON *.* TO 'repl'@'{Slave DB IP}' IDENTIFIED BY '{password}';
 mysql> FLUSH TABLES WITH READ LOCK;
 unlock tables;
 ```
