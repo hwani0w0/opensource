@@ -1,3 +1,6 @@
+# Galera Cluster
+
+
 ## 1. Repository 파일 생성
 + 설치하고자 하는 MySQL 버전에 따라 Galera 설치
 + 다운로드 경로 https://galeracluster.com/downloads/
@@ -92,3 +95,8 @@ wsrep_log_conflicts=ON
 |MySQL 5.7 이상|# mysqld_bootstrap|# systemctl start mysql|
 |MariaDB 10.4 이상|# galear_new_cluster|# systemctl start mariadb|
 
+```
+# mysql -u root -p -e “show status like 'wsrep_cluster_size'“
+# mysql –u root –p
+> show status like 'wsrep%';
+```
