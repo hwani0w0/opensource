@@ -8,7 +8,7 @@
 + Galera 4 – MySQL 8.0
 
 ```bash
-# vi /etc/yum.repos.d/galera.repo
+vi /etc/yum.repos.d/galera.repo
    
 [galera]
 name = Galera
@@ -23,26 +23,31 @@ gpgcheck = 1
 ```
 
 ```bash
-# yum –y update
-# yum –y install galera-3 mysql-wsrep-5.6
-# systemctl start mysql && systemctl status mysql
+yum –y update
+yum –y install galera-3 mysql-wsrep-5.6
+systemctl start mysql && systemctl status mysql
    
-# cat /root/.mysql_secret
-( MySQL5.7경우 # grep 'temporary password' /var/log/mysqld.log )
-# mysql_secure_installation
-(설정 이후 DB 접속)
-# mysql –u root -p
+cat /root/.mysql_secret
+# MySQL5.7경우 # grep 'temporary password' /var/log/mysqld.log 
+mysql_secure_installation
+# 설정 이후 DB 접속
+mysql –u root -p
 ```
    
    
 ## 2. Network 설정
++ MySQL Default Traffic — TCP 3306
++ Galera Cluster Communications — TCP & UDP 4567
++ Incremental State Transfers — TCP 4444
++ State Snapshot Transfers — TCP 4568
+   
 ```bash
 # firewall 설정
 systemctl enable firewalld
 systemctl start firewalld
 
 firewall-cmd --zone=public --add-service=mysql --permanent
-firewall-cmd --zone=public --add-port=3306/tcp —permanent
+firewall-cmd --zone=public --add-port=3306/tcp --permanent
 firewall-cmd --zone=public --add-port=4444/tcp --permanent
 firewall-cmd --zone=public --add-port=4567/tcp --permanent
 firewall-cmd --zone=public --add-port=4567/udp --permanent
@@ -62,7 +67,8 @@ semanage permissive -a mysqld_t
 
 ## 3. my.cnf 설정
 ```bash
-# vim /etc/my.cnf
+vim /etc/my.cnf
+   
 [mysqld]
 user=mysql
 binlog_format=ROW
@@ -88,7 +94,7 @@ wsrep_log_conflicts=ON
 ```bash
 systemctl stop mysql  && systemctl status mysql
 or
-mysql_install_db (DB 초기화 명령어, 선택 사항)
+mysql_install_db # DB 초기화 명령어, 선택 사항
 ```
 + DB 종류별 명령어
 |DB Version|Seed Node|Additional Node|
@@ -99,8 +105,7 @@ mysql_install_db (DB 초기화 명령어, 선택 사항)
    
 + galera cluster 상태 확인
 ```bash
-# mysql -u root -p -e “show status like 'wsrep_cluster_size'“
-# mysql –u root –p
+> show status like 'wsrep_cluster_size';
 > show status like 'wsrep%';
 ```
    
