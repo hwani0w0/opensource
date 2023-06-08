@@ -97,6 +97,7 @@ or
 mysql_install_db # DB 초기화 명령어, 선택 사항
 ```
 + DB 종류별 명령어
+   
 |DB Version|Seed Node|Additional Node|
 |------|---|---|
 |MySQL 5.6 이하|# mysqld --wsrep-new-cluster|# systemctl start mysqld|
