@@ -3,6 +3,8 @@
 # OS:Ubuntu 20.04
 
 # Env Conf
+sudo rm /etc/localtime
+sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 sudo hostnamectl set-hostname jenkins
 
 sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
