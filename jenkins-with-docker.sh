@@ -12,11 +12,6 @@ sudo sed -i '/PasswordAuthentication no/ s/^/#/' /etc/ssh/sshd_config
 sudo sed -i '/GSSAPIAuthentication yes/ s/^/#/' /etc/ssh/sshd_config
 sudo systemctl restart sshd
 
-echo "jenkins:cloud123" | sudo chpasswd
-
-echo "jenkins ALL = (ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/jenkins
-sudo chmod 0440 /etc/sudoers.d/jenkins
-
 # AWS CLI install
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 sudo apt install unzip
@@ -45,10 +40,6 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io -y
 
 sudo systemctl enable docker
 
-sudo groupadd docker
-sudo usermod -aG docker jenkins
-sudo systemctl restart docker
-
 # jenkins install
 sudo apt-get install openjdk-11-jdk -y
 #wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key |sudo gpg --dearmor -o /usr/share/keyrings/jenkins.gpg
@@ -66,4 +57,15 @@ sudo apt-get install jenkins -y
 sudo systemctl enable jenkins
 sudo systemctl start jenkins
 
-sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+#sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+# User Conf
+sudo useradd jenkins
+echo "jenkins:cloud" | sudo chpasswd
+echo "jenkins ALL = (ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/jenkins
+sudo chmod 0440 /etc/sudoers.d/jenkins
+
+
+sudo groupadd docker
+sudo usermod -aG docker jenkins
+sudo systemctl restart docker
