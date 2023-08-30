@@ -1,8 +1,9 @@
 ## Opensource Archive
 
-Apache HTTPD/Tomcat   
+Apache HTTPD
+Apache Tomcat
 PHP   
 MySQL   
-MaraiDB   
+MariaDB   
    
 ...etc   
