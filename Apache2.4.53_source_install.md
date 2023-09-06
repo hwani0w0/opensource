@@ -1,4 +1,5 @@
 ## 1. 필수 패키지 설치
+> OS : Ubuntu20.04
 ```
 $ sudo su
 # apt-get update
