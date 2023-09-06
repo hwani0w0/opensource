@@ -1,4 +1,5 @@
-# MySQL 5.7 수동 설치 
+# MySQL 5.7 수동 설치
+> OS : Ubuntu18.04
 ```
 ubuntu$ wget https://downloads.mysql.com/archives/get/p/23/file/mysql-boost-5.7.31.tar.gz
 ubuntu$ tar zxvf mysql-boost-5.7.31.tar.gz
