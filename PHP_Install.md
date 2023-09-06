@@ -1,4 +1,5 @@
 # PHP 7 Install
+> OS:CentOS7
 
 ## php version check
 ```
