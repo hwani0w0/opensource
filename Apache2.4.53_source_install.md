@@ -17,55 +17,56 @@ $ sudo su
 $ sudo su
 # cd /usr/local/src
 ```
-1) apr-1.7.0
-`/usr/local# wget http://mirror.navercorp.com/apache//apr/apr-1.7.0.tar.gz`
-2) apr-util-1.6.1
-`/usr/local# wget http://mirror.navercorp.com/apache//apr/apr-util-1.6.1.tar.gz`
+1) apr-1.7.4
+`/usr/local# wget https://dlcdn.apache.org//apr/apr-1.7.4.tar.gz`
+2) apr-util-1.6.3
+`/usr/local# wget https://dlcdn.apache.org//apr/apr-util-1.6.3.tar.gz`
 3) pcre-8.43
-`/usr/local# wget https://ko.osdn.net/projects/sfnet_pcre/downloads/pcre/8.43/pcre-8.43.tar.gz`
-4) apache-2.4.53
-`/usr/local# wget https://dlcdn.apache.org/httpd/httpd-2.4.53.tar.gz`
+`/usr/local# wget https://osdn.dl.osdn.net/sfnet/p/pc/pcre/pcre/8.43/pcre-8.43.tar.gz`
+4) apache-2.4.58
+`/usr/local# wget https://archive.apache.org/dist/httpd/httpd-2.4.58.tar.gz`
 
 ### 2-1. 압축해제
 ```
-/usr/local# tar xvfz apr-1.7.0.tar.gz
-/usr/local# tar xvfz apr-util-1.6.1.tar.gz
-/usr/local# tar xvfz pcre-8.45.tar.gz
-/usr/local# tar xvfz httpd-2.4.51.tar.gz
+/usr/local# tar xvfz apr-1.7.4.tar.gz
+/usr/local# tar xvfz apr-util-1.6.3.tar.gz
+/usr/local# tar xvfz pcre-8.43.tar.gz
+/usr/local# tar xvfz httpd-2.4.58.tar.gz
 ```
 
 ## 3. 설치
 ### 3-1. apr-util 설치
 ```
-/usr/local# cd apr-util-1.6.1
-/usr/local/apr-util-1.6.1# ./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/apr
-/usr/local/apr-util-1.6.1# make
-/usr/local/apr-util-1.6.1# make install
+/usr/local# cd apr-util-1.6.3
+/usr/local/apr-util-1.6.3# ./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/apr
+/usr/local/apr-util-1.6.3# make
+/usr/local/apr-util-1.6.3# make install
 ```
 ### 3-2. pcre 설치
 ```
-/usr/local# cd pcre-8.45
+/usr/local# cd pcre-8.43
 /usr/local/pcre-8.43# ./configure --prefix=/usr/local/pcre
 /usr/local/pcre-8.43# make
 /usr/local/pcre-8.43# make install
 ```
-### 3-3. Apache 설치 (apache-2.4.53)
+### 3-3. Apache 설치 (apache-2.4.58)
 ```
-/usr/local# cd httpd-2.4.53
-/usr/local/httpd-2.4.53# ./configure --prefix=/usr/local/apache2.4 \
+/usr/local# ln -s httpd-2.4.58 httpd
+/usr/local# cd httpd-2.4.58
+/usr/local/httpd# ./configure --prefix=/usr/local/httpd \
 --enable-module=so --enable-rewrite --enable-so \
 --with-apr=/usr/local/apr \
 --with-apr-util=/usr/local/apr-util \
 --with-pcre=/usr/local/pcre/bin/pcre-config \
 --enable-mods-shared=all
-/usr/local/httpd-2.4.53# make
-/usr/local/httpd-2.4.53# make install
+/usr/local/httpd# make
+/usr/local/httpd# make install
 ```
 
 ## 4. Apache 실행
 - 실행: `httpd -k start`, 종료: `httpd -k stop`
 ```
-/usr/local# sudo apache2.4/bin/httpd -k start
+/usr/local# sudo httpd/bin/httpd -k start
 /usr/local# ps -ef | grep httpd | grep -v grep
 /usr/local# sudo netstat -anp | grep httpd
 /usr/local# sudo curl http://127.0.0.1
@@ -86,8 +87,8 @@ Type=forking
 User=root
 Group=root
 
-ExecStart=/usr/local/apache/bin/apachectl start
-ExecStop=/usr/local/apache/bin/apachectl stop
+ExecStart=/usr/local/httpd/bin/apachectl start
+ExecStop=/usr/local/httpd/bin/apachectl stop
 
 Umask=007
 RestartSec=10
